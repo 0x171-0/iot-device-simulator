@@ -4,10 +4,12 @@
 
 Feedback, issues and pull requests are always appreciated :)
 
-[![Coverage Status](https://coveralls.io/repos/github/masonCalmAndCode/iot-device-simulator/badge.svg?branch=master&service=github)](https://github.com/masonCalmAndCode/iot-device-simulator)
+<!-- [![Coverage Status](https://coveralls.io/repos/github/masonCalmAndCode/iot-device-simulator/badge.svg?branch=master&service=github)](https://github.com/masonCalmAndCode/iot-device-simulator) -->
+
 [![npm version](https://badge.fury.io/js/typeorm-cursor-pagination.svg)](https://github.com/masonCalmAndCode/iot-device-simulator)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9ad73ee4890101f8ac38/maintainability)](https://github.com/masonCalmAndCode/iot-device-simulator)
-[![license](https://img.shields.io/github/license/masonCalmAndCode/iot-device-simulator)](https://github.com/masonCalmAndCode/iot-device-simulator)
+
+<!-- [![license](https://img.shields.io/github/license/masonCalmAndCode/iot-device-simulator)](https://github.com/masonCalmAndCode/iot-device-simulator) -->
 
 <div align="center">
   <img src="https://media.giphy.com/media/n6mEMqAuYOQ8l8qcEE/giphy.gif" width="1000"/>
@@ -110,9 +112,9 @@ console.log(result); // A string
 ```typescript
 import { generateDataFromFormat } from 'iot-device-simulator';
 
-const result = generateDataFromFormat(123); //  A string
+const result = generateDataFromFormat(123);
 
-console.log(result); // A string
+console.log(result); // 123
 ```
 
 ##### **2. Reference Type column**
