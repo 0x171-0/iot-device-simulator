@@ -1,8 +1,8 @@
 # IoT Device Simulator
 
-**IoT device simulator to auto generate random data in custom format and publish to MQTT broker.**
+**IoT device simulator to auto-generate random data in a custom format and publish to MQTT broker.**
 
-Feedback, issues and pull requests are always appreciated :)
+Feedback, issues, and pull requests are always appreciated :)
 
 <!-- [![Coverage Status](https://coveralls.io/repos/github/masonCalmAndCode/iot-device-simulator/badge.svg?branch=master&service=github)](https://github.com/masonCalmAndCode/iot-device-simulator) -->
 
@@ -91,7 +91,7 @@ lum.addState({
 
 #### **Device Type State Format Settings**
 
-There are 2 category of type 'value' and 'reference'. 'value' type is the base case of the column, and the reference type is combination of the base case. Please see the examples as below.
+There are two categories of type 'value' and 'reference'. 'value' type is the base case of the column, and the reference type is the combination of the base case. Please see the examples below.
 
 _ps: If you want to test or simply generate dummy data from the format can use the '**generateDataFromFormat**' function_
 
@@ -120,7 +120,7 @@ console.log(result); // 123
 ##### **2. Reference Type column**
 
 - **range**
-  - Pass in an object with max, min and digit, then will generate random number with specified decimals equals to digit
+  - Pass in an object with max, min, and digit, then will generate a random number with specified decimals equal to the digit
 
 ```typescript
 const result = generateDataFromFormat({ max: 100, min: 0, digit: 2 });
@@ -128,7 +128,7 @@ console.log(result); // number 0~100 with 2 decimals, ex: 29.03
 ```
 
 - **tuple**
-  - combined multiple base columns and reference columns into an array, will generate a tuple with random or fixed value in position
+  - combined multiple base columns and reference columns into an array, will generate a tuple with a random or fixed value in position
 
 ```typescript
 const result = generateDataFromFormat([
@@ -145,7 +145,7 @@ console.log(result); // [ 8, 52, 'voltage', { id: 'voltage', value: 10 } ]
 ```
 
 - **enum**
-  - combined multiple base columns into an array, will return a random element in array
+  - combined multiple base columns into an array, will return a random element in the array
 
 ```typescript
 const result = generateDataFromFormat([
@@ -157,7 +157,7 @@ console.log(result); // 0 or 'v1.0' or 123
 ```
 
 - **object**
-  - object combination, the keys can be any string, and value can be any base column or reference columns
+  - object combination, the keys can be any string, and the value can be any base column or reference columns
 
 ```typescript
 const result = generateDataFromFormat({
@@ -190,7 +190,7 @@ lumBot.toggleIsActive();
 
 ## Test
 
-To start an test, run the following command:
+To start a test, run the following command:
 
 `npm run test`
 
