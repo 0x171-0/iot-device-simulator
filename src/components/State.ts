@@ -1,20 +1,17 @@
-import { CustomPayload } from "../interface"
+import { CustomPayload } from '../interface';
 
 export default class State {
-  name: string
-  format: CustomPayload
-  description?: string
-  constructor(settings: {
-    name: string
-    payload: CustomPayload
-    description?: string
-  }) {
-    const { name, payload, description } = settings
-    this.name = name
-    this.format = payload
-    this.description = description
+  name: string;
+
+  format: CustomPayload;
+
+  constructor(settings: { name: string; payload: CustomPayload }) {
+    const { name, payload } = settings;
+    this.name = name;
+    this.format = payload;
   }
+
   public getFormat() {
-    return this.format
+    return this.format;
   }
 }

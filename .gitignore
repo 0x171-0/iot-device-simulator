@@ -5,3 +5,11 @@ node_modules/
 # Build result
 
 lib
+
+# Other
+note.md
+doc
+
+# Test Output
+test
+.nyc_output
