@@ -9,7 +9,9 @@ Feedback, issues and pull requests are always appreciated :)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9ad73ee4890101f8ac38/maintainability)](https://github.com/masonCalmAndCode/iot-device-simulator)
 [![license](https://img.shields.io/github/license/masonCalmAndCode/iot-device-simulator)](https://github.com/masonCalmAndCode/iot-device-simulator)
 
-<iframe src="https://giphy.com/embed/n6mEMqAuYOQ8l8qcEE" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/n6mEMqAuYOQ8l8qcEE"></a></p>
+<div align="center">
+  <img src="https://media.giphy.com/media/n6mEMqAuYOQ8l8qcEE/giphy.gif" width="1000"/>
+</div>
 
 ## Installation
 
@@ -21,13 +23,13 @@ Run `npm install iot-device-simulator --save` to download the library.
 
 ```typescript
 // Approach 1
-import simulator from "iot-device-simulator"
+import simulator from 'iot-device-simulator';
 // Approach 2
 import {
   createConnectionToBroker,
   createDevice,
   createDeviceType,
-} from "iot-device-simulator"
+} from 'iot-device-simulator';
 ```
 
 #### **Module Class Schema**
@@ -37,13 +39,13 @@ import {
 #### **Create Connection**
 
 ```typescript
-import { createConnectionToBroker } from "iot-device-simulator"
+import { createConnectionToBroker } from 'iot-device-simulator';
 const connection = createConnectionToBroker({
-  url: "http://your.domain:1883",
-  clientId: "your_clientId",
-  username: "your_name",
-  password: "your_password",
-})
+  url: 'http://your.domain:1883',
+  clientId: 'your_clientId',
+  username: 'your_name',
+  password: 'your_password',
+});
 ```
 
 #### **Create Device Type With States**
@@ -52,37 +54,37 @@ A device type has multiple states. Every State has a customized report format.
 Random dummy data will be generated following the format of the state.
 
 ```typescript
-const lum = createDeviceType("luminance_meter")
+const lum = createDeviceType('luminance_meter');
 
 // Create State With Custimised Report Format
 const lumFormat = [
-  { id: "version", value: ["v1", "v2"] },
-  { id: "voltage", value: { max: 100, min: 0, digit: 0 } },
-  { id: "module", value: 1.1 },
-]
+  { id: 'version', value: ['v1', 'v2'] },
+  { id: 'voltage', value: { max: 100, min: 0, digit: 0 } },
+  { id: 'module', value: 1.1 },
+];
 
 // Every state has it's own report format
 lum.addState({
-  name: "dark",
+  name: 'dark',
   payload: [
     ...lumFormat,
-    { id: "brightness", value: { max: 20, min: 0, digit: 1 } }, // different states may return different lum
+    { id: 'brightness', value: { max: 20, min: 0, digit: 1 } }, // different states may return different lum
   ],
-})
+});
 lum.addState({
-  name: "dusk",
+  name: 'dusk',
   payload: [
     ...lumFormat,
-    { id: "brightness", value: { max: 40, min: 20, digit: 1 } },
+    { id: 'brightness', value: { max: 40, min: 20, digit: 1 } },
   ],
-})
+});
 lum.addState({
-  name: "day",
+  name: 'day',
   payload: [
     ...lumFormat,
-    { id: "brightness", value: { max: 100, min: 40, digit: 1 } },
+    { id: 'brightness', value: { max: 100, min: 40, digit: 1 } },
   ],
-})
+});
 ```
 
 #### **Device Type State Format Settings**
@@ -96,21 +98,21 @@ _ps: If you want to test or simply generate dummy data from the format can use t
 - **string**
 
 ```typescript
-import { generateDataFromFormat } from "iot-device-simulator"
+import { generateDataFromFormat } from 'iot-device-simulator';
 
-const result = generateDataFromFormat("A string") //  A string
+const result = generateDataFromFormat('A string'); //  A string
 
-console.log(result) // A string
+console.log(result); // A string
 ```
 
 - **number**
 
 ```typescript
-import { generateDataFromFormat } from "iot-device-simulator"
+import { generateDataFromFormat } from 'iot-device-simulator';
 
-const result = generateDataFromFormat(123) //  A string
+const result = generateDataFromFormat(123); //  A string
 
-console.log(result) // A string
+console.log(result); // A string
 ```
 
 ##### **2. Reference Type column**
@@ -119,8 +121,8 @@ console.log(result) // A string
   - Pass in an object with max, min and digit, then will generate random number with specified decimals equals to digit
 
 ```typescript
-const result = generateDataFromFormat({ max: 100, min: 0, digit: 2 })
-console.log(result) // number 0~100 with 2 decimals, ex: 29.03
+const result = generateDataFromFormat({ max: 100, min: 0, digit: 2 });
+console.log(result); // number 0~100 with 2 decimals, ex: 29.03
 ```
 
 - **tuple**
@@ -130,14 +132,14 @@ console.log(result) // number 0~100 with 2 decimals, ex: 29.03
 const result = generateDataFromFormat([
   8, // number
   { max: 100, min: 0, digit: 0 }, // range
-  "voltage", // string
+  'voltage', // string
   {
     // object
-    id: "voltage",
+    id: 'voltage',
     value: { max: 10, min: 0, digit: 0 },
   },
-])
-console.log(result) // [ 8, 52, 'voltage', { id: 'voltage', value: 10 } ]
+]);
+console.log(result); // [ 8, 52, 'voltage', { id: 'voltage', value: 10 } ]
 ```
 
 - **enum**
@@ -146,10 +148,10 @@ console.log(result) // [ 8, 52, 'voltage', { id: 'voltage', value: 10 } ]
 ```typescript
 const result = generateDataFromFormat([
   0, // number
-  "v1.0", // string
+  'v1.0', // string
   123, // number
-])
-console.log(result) // 0 or 'v1.0' or 123
+]);
+console.log(result); // 0 or 'v1.0' or 123
 ```
 
 - **object**
@@ -157,12 +159,12 @@ console.log(result) // 0 or 'v1.0' or 123
 
 ```typescript
 const result = generateDataFromFormat({
-  id: "axisZ", // string
+  id: 'axisZ', // string
   value: 6.6, // number
   range: { max: 100, min: 0, digit: 0 }, // range
   // or any other types in value even object itself, nested combination is allowed
-})
-console.log(result) // { id: 'axisZ', value: 6.6, range: 56 }
+});
+console.log(result); // { id: 'axisZ', value: 6.6, range: 56 }
 ```
 
 #### **Create Device Instance From Device Type**
@@ -170,18 +172,18 @@ console.log(result) // { id: 'axisZ', value: 6.6, range: 56 }
 ```typescript
 const lumBot = createDevice({
   type: lum,
-  state: "day",
+  state: 'day',
   connection,
-  topic: "$device/IOTAWSOME/report",
-})
+  topic: '$device/IOTAWSOME/report',
+});
 // change state to change report
-lumBot.setState("dusk")
+lumBot.setState('dusk');
 // change interval to change time to send report to broker every interval seconds
-lumBot.setInterval(2000)
+lumBot.setInterval(2000);
 // change topic to report
-lumBot.setTopic("$device/IOTAWSOME/report")
+lumBot.setTopic('$device/IOTAWSOME/report');
 // change state of device, when active constantly send report, when inactive stop to report
-lumBot.toggleIsActive()
+lumBot.toggleIsActive();
 ```
 
 ## Test
