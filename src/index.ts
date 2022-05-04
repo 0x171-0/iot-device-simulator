@@ -50,7 +50,7 @@ export function createDevice(setting: {
   state: string;
   topic: string;
   connection: Connection;
-  interval: number;
+  interval?: number;
   allowLog?: boolean;
 }) {
   return new Device(setting);
