@@ -176,16 +176,32 @@ const lumBot = createDevice({
   type: lum,
   state: 'day',
   connection,
-  topic: '$device/IOTAWSOME/report',
+  topic: '$device/IOTAWESOME/report',
 });
 // change state to change report
 lumBot.setState('dusk');
 // change interval to change time to send report to broker every interval seconds
 lumBot.setInterval(2000);
 // change topic to report
-lumBot.setTopic('$device/IOTAWSOME/report');
+lumBot.setTopic('$device/IOTAWESOME/report');
 // change state of device, when active constantly send report, when inactive stop to report
 lumBot.toggleIsActive();
+```
+
+#### **Subscribe Topic and trigger state change according to payload value**
+
+- examples
+  - change the state to 'dark', when get topic `$device/IOTAWESOME/cmd` publish message, and the payload index 0 , 'value' key's value equals to 10
+
+```typescript
+lumBot.addSubTopic({
+  topic: '$device/IOTAWESOME/cmd', // topic to sbscribe
+  trigger: { key: '0.value', value: 10, state: 'dark' },
+  // key to get value from key and the expected state
+  // key will be split by '.' and for the keys array to get the value. like example below:
+  // example payload => [{ id: 'brightness', value: 10 }];
+  // payload[0]['value'] = 10
+});
 ```
 
 ## Test
@@ -199,3 +215,7 @@ To start a test, run the following command:
 © Mason Yu (masonCalmAndCode), 2022-NOW
 
 Released under the [MIT License](https://github.com/masonCalmAndCode/iot-device-simulator/blob/main/LICENSE)
+
+```
+
+```

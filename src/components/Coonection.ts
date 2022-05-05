@@ -41,14 +41,6 @@ export default class Connection {
           `<<<<< Simulator ${clientId} connection with ${url} closed >>>>>`
         );
       });
-
-      this.client.on('message', (topic, msg) => {
-        console.dir({
-          topic,
-          msg: JSON.parse(msg.toString()),
-          timestamp: new Date(),
-        });
-      });
     }
 
     this.client.on('error', (error) => {

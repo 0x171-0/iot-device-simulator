@@ -1,13 +1,17 @@
 import { CustomPayload } from '../interface';
 import State from './State';
 
+export type Topic = {
+  topic: string;
+  trigger?: { key: string; value: string | number; state: string };
+};
+
 export default class DeviceType {
   name: string;
 
-  states: State[];
+  states: State[] = [];
 
   constructor(name: string) {
-    this.states = [];
     this.name = name;
   }
 

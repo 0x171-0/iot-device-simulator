@@ -1,26 +1,28 @@
 import { generateDataFromFormat } from '..';
 import Connection from './Coonection';
-import DeviceType from './DeviceType';
+import DeviceType, { Topic as SubTopicTrigger } from './DeviceType';
 import State from './State';
 
 export default class Device {
-  name: string;
+  private name: string;
 
-  interval: number; // seconds
+  private interval: number; // seconds
 
-  type: DeviceType;
+  private type: DeviceType;
 
-  state: State;
+  private state: State;
 
-  topic: string;
+  private topic: string;
 
-  isActive = true;
+  private isActive = true;
 
-  connection: Connection;
+  private connection: Connection;
 
-  intervalJob: NodeJS.Timer;
+  private intervalJob: NodeJS.Timer;
 
-  allowLog = false;
+  private allowLog = false;
+
+  subTopics: SubTopicTrigger[] = [];
 
   constructor(settings: {
     type: DeviceType;
@@ -40,7 +42,33 @@ export default class Device {
     this.topic = topic || '';
     this.connection = connection;
     this.allowLog = allowLog || false;
+    this.connection.getConnection().on('message', (subTopic: string, msg) => {
+      const payload = JSON.parse(msg.toString());
+      if (this.allowLog) {
+        console.log(`<<<<< Get subscripted topic: ${subTopic} >>>>>`, payload);
+      }
+      for (const t of this.subTopics) {
+        if (t.topic === subTopic && t.trigger) {
+          let value = payload;
+          for (const k of t.trigger.key.split('.')) {
+            value = value[k];
+          }
+          if (value === t.trigger.value) {
+            if (this.allowLog) {
+              console.log(
+                `${subTopic} trigger stage change to ${t.trigger.state}`
+              );
+            }
+            return this.setState(t.trigger.state);
+          }
+        }
+      }
+    });
     this.report();
+  }
+
+  public getState() {
+    return this.state;
   }
 
   public setState(state: string) {
@@ -80,5 +108,10 @@ export default class Device {
       }
       this.connection.publish(this.topic, data);
     }, this.interval);
+  }
+
+  public addSubTopic(setting: SubTopicTrigger): void {
+    this.connection.getConnection().subscribe(setting.topic);
+    this.subTopics.push(setting);
   }
 }
