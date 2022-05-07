@@ -70,7 +70,7 @@ const connection = createConnectionToBroker({
 - A device type has multiple states.
 - Every state has a customized report format.
 - Dummy data will generate randomly according to the format of the state.
-- [How to define Sate format ?](#format)
+- [How to define format of state?](#state-format-column-definition)
 
 ```typescript
 const lum = createDeviceType('luminance_meter');
@@ -141,7 +141,7 @@ lumBot.addSubTopic({
 });
 ```
 
-## **State Format Column Definition** {#format}
+## State Format Column Definition
 
 There are two categories of type 'value' and 'reference'. 'value' type is the base case of the column, and the reference type is the combination of the base case. Please see the examples below.
 
