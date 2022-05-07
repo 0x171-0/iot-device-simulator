@@ -1,17 +1,25 @@
 # IoT Device Simulator
 
-**IoT device simulator to auto-generate random data in a custom format and publish to MQTT broker.**
+**IoT device simulator to auto-generate random data in the customized format and publish to MQTT broker.**
 
 Feedback, issues, and pull requests are always appreciated :)
 
 <!-- [![Coverage Status](https://coveralls.io/repos/github/masonCalmAndCode/iot-device-simulator/badge.svg?branch=master&service=github)](https://github.com/masonCalmAndCode/iot-device-simulator) -->
 
-<span align="left">
-  <img src="https://cccloudstorage.blob.core.windows.net/images/MQTT%202(1).png" width="100"/>
-</span>
-
-[![npm version](https://badge.fury.io/js/typeorm-cursor-pagination.svg)](https://github.com/masonCalmAndCode/iot-device-simulator)
-[![Maintainability](https://api.codeclimate.com/v1/badges/9ad73ee4890101f8ac38/maintainability)](https://github.com/masonCalmAndCode/iot-device-simulator)
+<p align="center">
+<a href="https://www.npmjs.com/package/iot-device-simulator">
+    <img alt="" src="https://img.shields.io/npm/dt/iot-device-simulator.svg?style=flat-square">
+</a>
+<a href="https://www.npmjs.com/package/iot-device-simulator">
+    <img alt="" src="https://img.shields.io/npm/v/iot-device-simulator.svg?style=flat-square">
+</a>
+<a href="https://www.npmjs.com/package/iot-device-simulator">
+    <img alt="" src="https://img.shields.io/npm/v/iot-device-simulator.svg?style=flat-square">
+</a>
+<a href="https://www.npmjs.com/package/iot-device-simulator">
+    <img alt="" src="https://api.codeclimate.com/v1/badges/9ad73ee4890101f8ac38/maintainability">
+</a>
+</p>
 
 <!-- [![license](https://img.shields.io/github/license/masonCalmAndCode/iot-device-simulator)](https://github.com/masonCalmAndCode/iot-device-simulator) -->
 
