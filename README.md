@@ -6,6 +6,10 @@ Feedback, issues, and pull requests are always appreciated :)
 
 <!-- [![Coverage Status](https://coveralls.io/repos/github/masonCalmAndCode/iot-device-simulator/badge.svg?branch=master&service=github)](https://github.com/masonCalmAndCode/iot-device-simulator) -->
 
+<span align="left">
+  <img src="https://cccloudstorage.blob.core.windows.net/images/MQTT%202(1).png" width="100"/>
+</span>
+
 [![npm version](https://badge.fury.io/js/typeorm-cursor-pagination.svg)](https://github.com/masonCalmAndCode/iot-device-simulator)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9ad73ee4890101f8ac38/maintainability)](https://github.com/masonCalmAndCode/iot-device-simulator)
 
@@ -44,7 +48,7 @@ import {
 
 ## Usage
 
-#### 1. **Create Connection**
+### 1. **Create Connection**
 
 ```typescript
 import { createConnectionToBroker } from 'iot-device-simulator';
@@ -56,10 +60,12 @@ const connection = createConnectionToBroker({
 });
 ```
 
-#### 2. **Create Device Type And States**
+### 2. **Create Device Type And States**
 
-A device type has multiple states. Every state has a customized report format.
-Dummy data will generate randomly according to the format of the state.
+- A device type has multiple states.
+- Every state has a customized report format.
+- Dummy data will generate randomly according to the format of the state.
+- [How to define Sate format ?](#format)
 
 ```typescript
 const lum = createDeviceType('luminance_meter');
@@ -95,13 +101,48 @@ lum.addState({
 });
 ```
 
-##### **Device Type State Format Settings**
+### 3.**Create Device Instance From Device Type**
+
+```typescript
+const lumBot = createDevice({
+  type: lum,
+  state: 'day',
+  connection,
+  topic: '$device/IOTAWESOME/report',
+});
+// change state to change report
+lumBot.setState('dusk');
+// change interval to change time to send report to broker every interval seconds
+lumBot.setInterval(2000);
+// change topic to report
+lumBot.setTopic('$device/IOTAWESOME/report');
+// change state of device, when active constantly send report, when inactive stop to report
+lumBot.toggleIsActive();
+```
+
+### 4. Subscribe Topic To Trigger State Changing
+
+- examples
+  - change the state to 'dark', when get topic `$device/IOTAWESOME/cmd` publish message, and the payload index 0 , 'value' key's value equals to 10
+
+```typescript
+lumBot.addSubTopic({
+  topic: '$device/IOTAWESOME/cmd', // topic to sbscribe
+  trigger: { key: '0.value', value: 10, state: 'dark' },
+  // key to get value from key and the expected state
+  // key will be split by '.' and for the keys array to get the value. like example below:
+  // example payload => [{ id: 'brightness', value: 10 }];
+  // payload[0]['value'] = 10
+});
+```
+
+## **State Format Column Definition** {#format}
 
 There are two categories of type 'value' and 'reference'. 'value' type is the base case of the column, and the reference type is the combination of the base case. Please see the examples below.
 
 _ps: If you want to test or get dummy data simply from the format can use the '**generateDataFromFormat**' function_
 
-**1. Value Type column**
+### **1. Value Type column**
 
 Value type columns are the base case of a column.
 If you nested the base case in the reference type column, it will recursively loop into it and generate dummy data until the end.
@@ -119,7 +160,7 @@ console.log(generateDataFromFormat(123)); // 123
 console.log(generateDataFromFormat('IoT')); // IoT
 ```
 
-**2. Reference Type column**
+### 2. Reference Type column\*\*
 
 Reference type columns are a combination of base case columns. The function for generating data will recursively loop into and generate dummy data until hit a base case end.
 
@@ -175,41 +216,6 @@ const result = generateDataFromFormat({
   // or any other types in value even object itself, nested combination is allowed
 });
 console.log(result); // { id: 'axisZ', value: 6.6, range: 56 }
-```
-
-#### 3.**Create Device Instance From Device Type**
-
-```typescript
-const lumBot = createDevice({
-  type: lum,
-  state: 'day',
-  connection,
-  topic: '$device/IOTAWESOME/report',
-});
-// change state to change report
-lumBot.setState('dusk');
-// change interval to change time to send report to broker every interval seconds
-lumBot.setInterval(2000);
-// change topic to report
-lumBot.setTopic('$device/IOTAWESOME/report');
-// change state of device, when active constantly send report, when inactive stop to report
-lumBot.toggleIsActive();
-```
-
-#### 4. Subscribe Topic To Trigger State Changing
-
-- examples
-  - change the state to 'dark', when get topic `$device/IOTAWESOME/cmd` publish message, and the payload index 0 , 'value' key's value equals to 10
-
-```typescript
-lumBot.addSubTopic({
-  topic: '$device/IOTAWESOME/cmd', // topic to sbscribe
-  trigger: { key: '0.value', value: 10, state: 'dark' },
-  // key to get value from key and the expected state
-  // key will be split by '.' and for the keys array to get the value. like example below:
-  // example payload => [{ id: 'brightness', value: 10 }];
-  // payload[0]['value'] = 10
-});
 ```
 
 ## Test
