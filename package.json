@@ -1,6 +1,6 @@
 {
   "name": "iot-device-simulator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "IoT device simulator to generate random data in custom format and publish to MQTT broker",
   "main": "lib/src/index.js",
   "scripts": {
