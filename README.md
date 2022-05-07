@@ -19,9 +19,17 @@ Feedback, issues, and pull requests are always appreciated :)
 
 Run `npm install iot-device-simulator --save` to download the library.
 
-## Usage
+## Features
 
-### Import Modules
+- Easily generate dummy data from a customized format
+- Publish customized report to MQTT broker in interval time
+- Easily change the state of the device simulator to generate different data to represent the different scenario
+
+## **Module Schema**
+
+![](uml.png)
+
+## Import Modules
 
 ```typescript
 // Approach 1
@@ -34,26 +42,24 @@ import {
 } from 'iot-device-simulator';
 ```
 
-#### **Module Class Schema**
+## Usage
 
-![](uml.png)
-
-#### **Create Connection**
+#### 1. **Create Connection**
 
 ```typescript
 import { createConnectionToBroker } from 'iot-device-simulator';
 const connection = createConnectionToBroker({
-  url: 'http://your.domain:1883',
+  url: 'http://your.host.and.port:1234',
   clientId: 'your_clientId',
   username: 'your_name',
   password: 'your_password',
 });
 ```
 
-#### **Create Device Type With States**
+#### 2. **Create Device Type And States**
 
-A device type has multiple states. Every State has a customized report format.
-Random dummy data will be generated following the format of the state.
+A device type has multiple states. Every state has a customized report format.
+Dummy data will generate randomly according to the format of the state.
 
 ```typescript
 const lum = createDeviceType('luminance_meter');
@@ -89,38 +95,37 @@ lum.addState({
 });
 ```
 
-#### **Device Type State Format Settings**
+##### **Device Type State Format Settings**
 
 There are two categories of type 'value' and 'reference'. 'value' type is the base case of the column, and the reference type is the combination of the base case. Please see the examples below.
 
-_ps: If you want to test or simply generate dummy data from the format can use the '**generateDataFromFormat**' function_
+_ps: If you want to test or get dummy data simply from the format can use the '**generateDataFromFormat**' function_
 
-##### **1. Value Type column**
+**1. Value Type column**
 
-- **string**
+Value type columns are the base case of a column.
+If you nested the base case in the reference type column, it will recursively loop into it and generate dummy data until the end.
 
-```typescript
-import { generateDataFromFormat } from 'iot-device-simulator';
+1. **boolean**
 
-const result = generateDataFromFormat('A string'); //  A string
+1. **number**
 
-console.log(result); // A string
-```
-
-- **number**
+1. **string**
 
 ```typescript
 import { generateDataFromFormat } from 'iot-device-simulator';
-
-const result = generateDataFromFormat(123);
-
-console.log(result); // 123
+console.log(generateDataFromFormat(true)); // true
+console.log(generateDataFromFormat(123)); // 123
+console.log(generateDataFromFormat('IoT')); // IoT
 ```
 
-##### **2. Reference Type column**
+**2. Reference Type column**
+
+Reference type columns are a combination of base case columns. The function for generating data will recursively loop into and generate dummy data until hit a base case end.
 
 - **range**
-  - Pass in an object with max, min, and digit, then will generate a random number with specified decimals equal to the digit
+  - An object with max, min, and digit
+  - Return a random number with specified decimals equal to the digit
 
 ```typescript
 const result = generateDataFromFormat({ max: 100, min: 0, digit: 2 });
@@ -128,7 +133,8 @@ console.log(result); // number 0~100 with 2 decimals, ex: 29.03
 ```
 
 - **tuple**
-  - combined multiple base columns and reference columns into an array, will generate a tuple with a random or fixed value in position
+  - Combined multiple base columns and reference columns into an array
+  - Return element in the array randomly
 
 ```typescript
 const result = generateDataFromFormat([
@@ -145,7 +151,8 @@ console.log(result); // [ 8, 52, 'voltage', { id: 'voltage', value: 10 } ]
 ```
 
 - **enum**
-  - combined multiple base columns into an array, will return a random element in the array
+  - Combined multiple base columns into array
+  - Return element in the array randomly
 
 ```typescript
 const result = generateDataFromFormat([
@@ -157,7 +164,8 @@ console.log(result); // 0 or 'v1.0' or 123
 ```
 
 - **object**
-  - object combination, the keys can be any string, and the value can be any base column or reference columns
+  - object with keys storing a value of value or reference type of columns
+  - return an object of recursively generated data
 
 ```typescript
 const result = generateDataFromFormat({
@@ -169,7 +177,7 @@ const result = generateDataFromFormat({
 console.log(result); // { id: 'axisZ', value: 6.6, range: 56 }
 ```
 
-#### **Create Device Instance From Device Type**
+#### 3.**Create Device Instance From Device Type**
 
 ```typescript
 const lumBot = createDevice({
@@ -188,7 +196,7 @@ lumBot.setTopic('$device/IOTAWESOME/report');
 lumBot.toggleIsActive();
 ```
 
-#### **Subscribe Topic and trigger state change according to payload value**
+#### 4. Subscribe Topic To Trigger State Changing
 
 - examples
   - change the state to 'dark', when get topic `$device/IOTAWESOME/cmd` publish message, and the payload index 0 , 'value' key's value equals to 10
@@ -215,7 +223,3 @@ To start a test, run the following command:
 © Mason Yu (masonCalmAndCode), 2022-NOW
 
 Released under the [MIT License](https://github.com/masonCalmAndCode/iot-device-simulator/blob/main/LICENSE)
-
-```
-
-```
