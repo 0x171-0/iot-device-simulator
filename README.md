@@ -14,9 +14,6 @@ Feedback, issues, and pull requests are always appreciated :)
     <img alt="" src="https://img.shields.io/npm/v/iot-device-simulator.svg?style=flat-square">
 </a>
 <a href="https://www.npmjs.com/package/iot-device-simulator">
-    <img alt="" src="https://img.shields.io/npm/v/iot-device-simulator.svg?style=flat-square">
-</a>
-<a href="https://www.npmjs.com/package/iot-device-simulator">
     <img alt="" src="https://api.codeclimate.com/v1/badges/9ad73ee4890101f8ac38/maintainability">
 </a>
 </p>
