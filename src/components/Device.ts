@@ -43,7 +43,13 @@ export default class Device {
     this.connection = connection;
     this.allowLog = allowLog || false;
     this.connection.getConnection().on('message', (subTopic: string, msg) => {
-      const payload = JSON.parse(msg.toString());
+      let payload;
+      try {
+        payload = JSON.parse(msg.toString());
+      } catch (e) {
+        payload = msg.toString();
+      }
+
       if (this.allowLog) {
         console.log(`<<<<< Get subscripted topic: ${subTopic} >>>>>`, payload);
       }
