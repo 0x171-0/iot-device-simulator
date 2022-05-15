@@ -21,7 +21,11 @@ export function generateDataFromFormat(format: CustomPayload): any {
     Object.prototype.hasOwnProperty.call(format, 'digit')
   ) {
     const { max, min, digit: decimals } = format;
-    return parseFloat((Math.random() * (max - min) + min).toFixed(decimals));
+    const number = parseFloat(Math.random() * (max - min) + min);
+    if (decimals >= 0) {
+      return +number.toFixed(decimals);
+    }
+    return +number.toFixed(0) / 10 ** Math.abs(decimals);
   }
   if (typeof format === 'object') {
     const result = {} as { [key: string]: CustomPayload };

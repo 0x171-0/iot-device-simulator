@@ -1,6 +1,6 @@
 {
   "name": "iot-device-simulator",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "IoT device simulator to generate random data in custom format and publish to MQTT broker",
   "main": "lib/src/index.js",
   "scripts": {
@@ -18,7 +18,10 @@
     "iot",
     "mqtt",
     "simulator",
-    "publish"
+    "publish",
+    "subscribe",
+    "broker",
+    "data"
   ],
   "author": "Mason Yu",
   "license": "MIT",
